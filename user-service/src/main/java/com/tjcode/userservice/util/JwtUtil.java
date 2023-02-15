@@ -1,15 +1,17 @@
 package com.tjcode.userservice.util;
 
+import com.tjcode.userservice.entity.Role;
+import com.tjcode.userservice.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -45,8 +47,19 @@ public class JwtUtil {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
+    private Set getAuthorities(Set<Role> roleSet) {
+        Set authorities = new HashSet();
+
+        roleSet.forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+        });
+
+        return authorities;
+    }
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities());
 
         return Jwts.builder()
                 .setClaims(claims)
