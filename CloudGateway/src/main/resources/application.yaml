@@ -17,3 +17,7 @@ spring:
           uri: lb://RIDE-SERVICE
           predicates:
             - Path=/ride-service/**
+        - id: RIDE-PRODUCER-SERVICE
+          uri: lb://RIDE-PRODUCER-SERVICE
+          predicates:
+            - Path=/ride-producer/**
