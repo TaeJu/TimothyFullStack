@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="ride-service" />
+        <module name="email-service" />
         <module name="user-service" />
         <module name="service-registry" />
         <module name="CloudGateway" />
@@ -17,6 +18,7 @@
     <bytecodeTargetLevel>
       <module name="CloudGateway" target="11" />
       <module name="config-server" target="11" />
+      <module name="email-service" target="11" />
       <module name="ride-producer" target="11" />
       <module name="ride-service" target="11" />
       <module name="service-registry" target="11" />
@@ -27,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="CloudGateway" options="-parameters" />
       <module name="config-server" options="-parameters" />
+      <module name="email-service" options="-parameters" />
       <module name="ride-producer" options="-parameters" />
       <module name="ride-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
