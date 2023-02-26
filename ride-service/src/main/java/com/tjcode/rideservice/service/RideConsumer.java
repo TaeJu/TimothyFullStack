@@ -1,5 +1,6 @@
 package com.tjcode.rideservice.service;
 
+import com.tjcode.basedomains.entity.EmailEvent;
 import com.tjcode.rideproducer.event.RideEvent;
 import com.tjcode.rideservice.entity.RideRequest;
 import com.tjcode.rideservice.entity.Rider;
@@ -22,6 +23,9 @@ public class RideConsumer {
     @Autowired
     private RiderRepository riderRepository;
 
+    @Autowired
+    private EmailProducer emailProducer;
+
     @KafkaListener(
             topics = "${spring.kafka.topic.name}"
             , groupId = "${spring.kafka.consumer.group-id}"
@@ -29,6 +33,7 @@ public class RideConsumer {
     public void consume(RideEvent rideEvent) {
         logger.info(String.format("Ride Event received in Ride Consumer Service => %s", rideEvent.toString()));
 
+        EmailEvent emailEvent = new EmailEvent();
         Rider rider = riderRepository.getAvailableRider(rideEvent.getRideRequest().getLocation());
         RideRequest rideRequest;
 
@@ -40,6 +45,10 @@ public class RideConsumer {
                     .build();
             rider.setCurrentFillSpot(rider.getCurrentFillSpot() + 1);
 
+            emailEvent.setRequestName(rideEvent.getRideRequest().getRequestName());
+            emailEvent.setLocation(rideRequest.getLocation());
+            emailEvent.setRiderInfo(rideRequest.getRider().getName());
+
             riderRepository.save(rider);
         } else {
             logger.info("No Available Rider At Your Location");
@@ -47,8 +56,15 @@ public class RideConsumer {
                     .requestName(rideEvent.getRideRequest().getRequestName())
                     .location(rideEvent.getRideRequest().getLocation())
                     .build();
+
+            emailEvent.setRequestName(rideEvent.getRideRequest().getRequestName());
+            emailEvent.setLocation(rideRequest.getLocation());
+            emailEvent.setRiderInfo("N/A");
         }
 
         rideRequestRepository.save(rideRequest);
+
+        // send Message to EailService
+        emailProducer.sendMessage(emailEvent);
     }
 }

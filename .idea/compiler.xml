@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="ride-service" />
+        <module name="base-domains" />
         <module name="email-service" />
         <module name="user-service" />
         <module name="service-registry" />
@@ -16,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="base-domains" target="11" />
       <module name="CloudGateway" target="11" />
       <module name="config-server" target="11" />
       <module name="email-service" target="11" />
@@ -28,6 +30,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="CloudGateway" options="-parameters" />
+      <module name="base-domains" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="email-service" options="-parameters" />
       <module name="ride-producer" options="-parameters" />
