@@ -19,10 +19,4 @@ public class EmailServiceApplication {
 		SpringApplication.run(EmailServiceApplication.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail() {
-		emailSenderService.sendMail("ltj8316@gmail.com",
-				"This is a test email",
-				"This is test Body Email");
-	}
 }
