@@ -26,6 +26,7 @@ public class RideController {
     }
 
     @PostMapping("/registerRider")
+    @PreAuthorize("hasAnyRole('Admin','User')")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
         rideService.registerRider(rider);
         return ResponseEntity.ok(rider);

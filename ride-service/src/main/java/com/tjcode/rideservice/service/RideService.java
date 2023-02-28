@@ -42,9 +42,6 @@ public class RideService {
                     rideRequestSet.add(rideRequest);
                     numAssigned++;
                 }
-                rider.setRequests(rideRequestSet);
-                rider.setCurrentFillSpot(numAssigned);
-                riderRepository.save(rider);
             } else {
                 for (int i = 0; i < rideRequests.get().size(); i++) {
                     rideRequestQueue.add(rideRequests.get().get(i));
@@ -56,10 +53,10 @@ public class RideService {
                     rideRequestSet.add(rideRequest);
                     numAssigned++;
                 }
-                rider.setRequests(rideRequestSet);
-                rider.setCurrentFillSpot(numAssigned);
-                riderRepository.save(rider);
             }
+            rider.setRequests(rideRequestSet);
+            rider.setCurrentFillSpot(numAssigned);
+            riderRepository.save(rider);
         }
     }
 }

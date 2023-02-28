@@ -4,6 +4,7 @@ import com.tjcode.rideproducer.entity.RideRequest;
 import com.tjcode.rideproducer.event.RideEvent;
 import com.tjcode.rideproducer.service.RideProducer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class RideProducerController {
     private RideProducer rideProducer;
 
     @PostMapping("/rideRequest")
+    @PreAuthorize("hasAnyRole('Admin','User')")
     public String requestRide(@RequestBody RideRequest rideRequest) {
         RideEvent rideEvent = new RideEvent();
         rideEvent.setStatus("PENDING");
