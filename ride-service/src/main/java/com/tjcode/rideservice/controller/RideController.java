@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ride-service")
 public class RideController {
@@ -30,5 +32,11 @@ public class RideController {
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
         rideService.registerRider(rider);
         return ResponseEntity.ok(rider);
+    }
+
+    @GetMapping("/getAllRider")
+    @PreAuthorize("hasAnyRole('Admin','User')")
+    public ResponseEntity<List<Rider>> getAllRider() {
+        return ResponseEntity.ok(rideService.getAllRider());
     }
 }
