@@ -35,12 +35,27 @@ public class Rider implements Serializable {
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
-    //@JsonIgnore
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy="rider", cascade = CascadeType.ALL)
-//    private Set<RideRequest> requests = new HashSet<>();
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy="rider", cascade = CascadeType.ALL)
     private Set<RideRequest> requests = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "rider_image",
+        joinColumns = {
+            @JoinColumn(name = "rider_id")
+        },
+            inverseJoinColumns = {
+                @JoinColumn(name = "image_id")
+            }
+    )
+    private ImageModel imageModel;
+
+    public ImageModel getImageModel() {
+        return imageModel;
+    }
+
+    public void setImageModel(ImageModel imageModel) {
+        this.imageModel = imageModel;
+    }
 
     public Integer getRiderId() {
         return riderId;
