@@ -47,6 +47,12 @@ public class RideController {
         return ResponseEntity.ok(rider);
     }
 
+    @GetMapping("/getRiderDetailsById/{riderId}")
+    @PreAuthorize("hasAnyRole('Admin','User')")
+    public ResponseEntity<Rider> getRiderDetailsById(@PathVariable("riderId") Integer riderId) {
+        return ResponseEntity.ok(rideService.getRiderDetailsById(riderId));
+    }
+
     @GetMapping("/getAllRider")
     @PreAuthorize("hasAnyRole('Admin','User')")
     public ResponseEntity<List<Rider>> getAllRider() {
