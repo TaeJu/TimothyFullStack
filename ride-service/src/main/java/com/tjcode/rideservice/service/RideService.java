@@ -70,7 +70,7 @@ public class RideService {
     }
 
     public List<Rider> getAllRider() {
-        TypedQuery<Rider> q = em.createQuery("SELECT r FROM Rider r LEFT JOIN FETCH r.requests", Rider.class);
+        TypedQuery<Rider> q = em.createQuery("SELECT DISTINCT r FROM Rider r LEFT JOIN FETCH r.requests", Rider.class);
         List<Rider> riders = q.getResultList();
 
         em.close();
@@ -80,5 +80,9 @@ public class RideService {
         }
 
         return riders;
+    }
+
+    public Rider getRiderDetailsById(Integer riderId) {
+        return riderRepository.findById(riderId).get();
     }
 }
